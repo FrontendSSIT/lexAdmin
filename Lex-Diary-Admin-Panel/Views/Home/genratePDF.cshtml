@@ -69,7 +69,7 @@
 
         $('#cmd').click(function () {
             doc.fromHTML($('#pdfDiv').html(), 15, 15, {
-                'width': 170,
+                'width': 500,
                 'elementHandlers': specialElementHandlers
             });
             doc.save('sample-file.pdf');

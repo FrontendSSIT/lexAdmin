@@ -23,7 +23,7 @@ namespace Lex_Diary_Admin_Panel.Utility
             //BaseAddress = new Uri(url);
             string UserName = ConfigurationManager.AppSettings["userName"].ToString();
             string Password = ConfigurationManager.AppSettings["password"].ToString();
-            BaseAddress = new Uri("http://sellinbd.com/LexDiary/");
+            BaseAddress = new Uri("http://sellinbd.com/Lawyer-Shop/");
         }
     }
 }

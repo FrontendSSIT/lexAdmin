@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "genrateInvoice";
+    Layout = "~/Views/Shared/_MasterPageWithOutLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <button style="text-align:right" id="cmd"> Generate Invoice</button>
+    <div class="container" id="pdfDiv">
+        
+        <h2>Condensed Table</h2>
+        <p>The .table-condensed class makes a table more compact by cutting cell padding in half:</p>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                </tr>
+                <tr>
+                    <td>Mary</td>
+                    <td>Moe</td>
+                    <td>mary@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+@section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script>
+
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+
+        $('#cmd').click(function () {
+            doc.fromHTML($('#pdfDiv').html(), 5, 5, {
+                'width': 500,
+                'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample-file.pdf');
+        });
+    </script>
+}
+
+ 
+@*<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        How to take screenshot of
+        a div using JavaScript?
+    </title>
+
+    <!-- Include from the CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
+
+    </script>
+
+    <!-- Include locally otherwise -->
+    <!-- <script src='html2canvas.js'></script> -->
+
+    <style>
+        #photo {
+            border: 4px solid green;
+            padding: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="photo">
+        <h1>GeeksforGeeks</h1>
+        Hello everyone! This is a
+        trial page for taking a
+        screenshot.
+        <br><br>
+        This is a dummy button!
+        <button> Dummy</button>
+        <br><br>
+        Click the button below to
+        take a screenshot of the div.
+        <br><br>
+
+        <!-- Define the button
+        that will be used to
+        take the screenshot -->
+        <button onclick="takeshot()">
+            Take Screenshot
+        </button>
+    </div>
+    <h1>Screenshot:</h1>
+    <div id="output"></div>
+
+    <script type="text/javascript">
+
+
+        // Define the function
+        // to screenshot the div
+        function takeshot() {
+            let div =
+                document.getElementById('photo');
+
+            // Use the html2canvas
+            // function to take a screenshot
+            // and append it
+            // to the output div
+            html2canvas(div).then(
+                function (canvas) {
+                    document
+                    .getElementById('output')
+                    .appendChild(canvas);
+                })
+        }
+    </script>
+</body>
+
+</html>*@
+ 

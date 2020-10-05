@@ -7,5 +7,6 @@ namespace Lex_Diary_Admin_Panel.Utility
 {
     public class GeneratePdf
     {
+
     }
 }

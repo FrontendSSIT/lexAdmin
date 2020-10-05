@@ -12,7 +12,21 @@ namespace Lex_Diary_Admin_Panel.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (isLogin)
+            {
+                return RedirectToAction("Add", "Product");
+            }
+            else
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
 
         public ActionResult About()
@@ -40,16 +54,24 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
             if(username==UserName && password == Password)
             {
-
+                Session["isLogin"] = true;
+                return RedirectToAction("Add", "Product");
             }
-            else
-            {
-
-            }
+            Session["isLogin"] = false;
             return View();
         }
-        
+        public ActionResult LogOut()
+        {
+            Session["isLogin"] = false;
+
+            return RedirectToAction("Login","Home");
+        }
         public ActionResult genratePDF()
+        {
+            return View();
+        }
+
+        public ActionResult genrateInvoice()
         {
             return View();
         }

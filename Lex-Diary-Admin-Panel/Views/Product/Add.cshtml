@@ -9,73 +9,107 @@
     </div>
     <div class="col-md-8">
         <h2 style="text-align:center">Add Product</h2>
-        <form class="form-horizontal" action="/action_page.php">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="productName">Product Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="productName" placeholder="Enter product name" name="productName">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="category">Category</label>
-                <div class="col-sm-10">
-                    <select class="form-control" id="category">
-                        <option>car</option>
-                        <option>bike</option>
-                        <option>headphone</option>
-                        <option>t-shirt</option>
-                    </select>
-
-                </div>
-            </div>
+@using (Html.BeginForm("Add", "Product", FormMethod.Post,new { @enctype = "multipart/form-data" }))
+{
+    <fieldset>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="email">Description</label>
+            <label class="control-label col-sm-2" for="productName">Product Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="description" placeholder="Enter description" name="description">
+                <input type="text" class="form-control" id="productName" placeholder="Enter product name" name="productName">
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="email">Price</label>
+        @*<div class="form-group">
+            <label class="control-label col-sm-2" for="category">Category</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+                <select class="form-control" id="category">
+                    <option>car</option>
+                    <option>bike</option>
+                    <option>headphone</option>
+                    <option>t-shirt</option>
+                </select>
+
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="productDescription">Description</label>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" id="productDescription" placeholder="Enter description" name="productDescription"></textarea>
+           </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="productPrice">Price</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="productPrice" placeholder="Enter price" name="productPrice">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="image">Load Image</label>
             <div class="col-sm-10 pt-2">
-                <input type="file" id="imag1e" placeholder="Enter image" name="image1">
-            </div>
 
-            <div class="col-sm-10 pt-4">
-                <input type="file" id="image2" placeholder="Enter image" name="image2">
-            </div>
-
-            <div class="col-sm-10 pt-4">
-                <input type="file" id="image3" placeholder="Enter image" name="image3">
+                <input type="file" name="file1" onchange="encodeImgtoBase64(this)">
+                <input  type="hidden" id="input" name="input"/>
             </div>
             <div class="col-sm-10 pt-4">
-                <input type="file" id="image4" placeholder="Enter image" name="image4">
+                <input type="file" name="file2">
             </div>
             <div class="col-sm-10 pt-4">
-                <input type="file" id="image5" placeholder="Enter image" name="image5">
+                <input type="file"  name="file3">
+            </div>
+            <div class="col-sm-10 pt-4">
+                <input type="file"   name="file4">
+            </div>
+            <div class="col-sm-10 pt-4">
+                <input type="file" name="file5">
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label><input type="checkbox" name="remember"> Remember me</label>
-                </div>
-            </div>
-        </div>
+        <img id="convertImg" name="convertImg" src=""></img>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default btn-primary">Submit</button>
             </div>
         </div>
-        </form>
+    </fieldset>
+    @*<fieldset>
+        Select a file <input type="file" name="file1" />
+         <input type="file" name="file2" />
+         <input type="file" name="file3" />
+         <input type="file" name="file4" />
+         <input type="file" name="file5" />
+        <input type="submit" value="Upload" />
+    </fieldset>*@
+}
     </div>
     <div class="col-md-2">
 
     </div>
 </div>
+@section Scripts{
+    <script type="text/javascript">
 
+   function encodeImgtoBase64(element) {
+
+      var file = element.files[0];
+
+      var reader = new FileReader();
+
+      reader.onloadend = function() {
+
+          var text = reader.result;
+          var strImage = text.replace(/^data:image\/[a-z]+;base64,/, "");
+          $('#input').val(strImage);
+          $("#convertImg").attr("src", reader.result);
+        $("#convertImg").text(reader.result);
+
+        $("#base64Img").attr("src", reader.result);
+
+      }
+      if (file) {
+          reader.readAsDataURL(file);
+      }
+     
+
+    }
+
+</script>
+    
+    }
