@@ -28,7 +28,11 @@ namespace Lex_Diary_Admin_Panel.Controllers
             }
             
         }
+        public ActionResult Dashboard()
+        {
 
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

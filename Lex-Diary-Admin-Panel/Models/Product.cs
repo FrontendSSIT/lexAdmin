@@ -17,6 +17,7 @@ namespace Lex_Diary_Admin_Panel.Models
         public string file3 { get; set; }
         public string file4 { get; set; }
         public string file5 { get; set; }
+        public string thumbnail { get; set; }
         public string userNumber { get; set; }
        
     }

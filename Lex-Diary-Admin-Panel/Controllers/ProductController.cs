@@ -34,99 +34,57 @@ namespace Lex_Diary_Admin_Panel.Controllers
             }
             return View();
         }
-        public class ImageFileClass
-        {
-            public string file1 { get; set; }
-        }
         [HttpPost]
-        public ActionResult Add(/*string productName, string productDescription, string productPrice, */ string input, HttpPostedFileBase file1/*,HttpPostedFileBase file2, HttpPostedFileBase file3, HttpPostedFileBase file4, HttpPostedFileBase file5*/)
+        public ActionResult Add(string productName, string productDescription, string productPrice, string file1,string file2, string file3, string file4, string file5, string thumbnailFile1)
         {
-
-
-            //if (file != null && file.ContentLength > 0)
-            //{
-            //    var fileName = Path.GetFileName(file.FileName);
-
-
-
-            //    file.SaveAs(path);
-            //}
-
-            //var filename = Path.GetFileName(file.FileName);
-            //var path = Path.Combine(Server.MapPath("http://sellinbd.com/Lawyer-Shopregistration/lawyer_products/"), filename);
-            //file.SaveAs(path);
-
+            
+   
             try
             {
-                ImageFileClass c1 = new ImageFileClass();
-                c1.file1 = input;
                 using (var client = new HttpClientDemo())
                 {
-                    Product product = new Product();
-                    if (file1 != null)
+                    Product aProduct = new Product();
+                    aProduct.productName = productName;
+                    aProduct.productDescription = productDescription;
+                    aProduct.productPrice = productPrice;
+                    if (!string.IsNullOrEmpty(file1))
                     {
-                        string file1Name = Path.GetFileName(file1.FileName);
-                        byte[] file1PictureAsByte = new byte[file1.ContentLength];
-                        using (BinaryReader theReader = new BinaryReader(file1.InputStream))
-                        {
-                            file1PictureAsByte = theReader.ReadBytes(file1.ContentLength);
-                        }
-                        string file1DataAsString = Convert.ToBase64String(file1PictureAsByte);
-                        product.file1 = file1DataAsString;
+                        aProduct.file1 = file1;
+                        aProduct.thumbnail = thumbnailFile1;
                     }
-                    //if (file2 != null)
-                    //{
-                    //    string file2Name = Path.GetFileName(file2.FileName);
-                    //    byte[] file2PictureAsByte = new byte[file2.ContentLength];
-                    //    using (BinaryReader theReader = new BinaryReader(file1.InputStream))
-                    //    {
-                    //        file2PictureAsByte = theReader.ReadBytes(file2.ContentLength);
-                    //    }
-                    //    string file2DataAsString = Convert.ToBase64String(file2PictureAsByte);
-                    //    product.file2 = file2DataAsString;
-                    //}
-                    //if (file3 != null)
-                    //{
-                    //    string file3Name = Path.GetFileName(file3.FileName);
-                    //    byte[] file3PictureAsByte = new byte[file3.ContentLength];
-                    //    using (BinaryReader theReader = new BinaryReader(file3.InputStream))
-                    //    {
-                    //        file3PictureAsByte = theReader.ReadBytes(file3.ContentLength);
-                    //    }
-                    //    string file3DataAsString = Convert.ToBase64String(file3PictureAsByte);
-                    //    product.file3 = file3DataAsString;
-                    //}
-                    //if (file4 != null)
-                    //{
-                    //    string file4Name = Path.GetFileName(file4.FileName);
-                    //    byte[] file4PictureAsByte = new byte[file4.ContentLength];
-                    //    using (BinaryReader theReader = new BinaryReader(file4.InputStream))
-                    //    {
-                    //        file4PictureAsByte = theReader.ReadBytes(file4.ContentLength);
-                    //    }
-                    //    string file4DataAsString = Convert.ToBase64String(file4PictureAsByte);
-                    //    product.file4 = file4DataAsString;
-                    //}
-
-                    //if (file5!= null)
-                    //{
-                    //    string file5Name = Path.GetFileName(file5.FileName);
-                    //    byte[] file5PictureAsByte = new byte[file5.ContentLength];
-                    //    using (BinaryReader theReader = new BinaryReader(file5.InputStream))
-                    //    {
-                    //        file5PictureAsByte = theReader.ReadBytes(file4.ContentLength);
-                    //    }
-                    //    string file5DataAsString = Convert.ToBase64String(file5PictureAsByte);
-                    //    product.file5 = file5DataAsString;
-                    //}
-                    //product.productName = productName;
-                    //product.productDescription = productDescription;
-                    //product.productPrice = productPrice;
-                    //product.userNumber = ConfigurationManager.AppSettings["userName"].ToString();
-
-
-                    client.BaseAddress = new Uri("http://sellinbd.com/Lawyer-Shop/");
-                    var postTask = client.PostAsJsonAsync("registration/test.php", c1);
+                    if (!string.IsNullOrEmpty(file2))
+                    {
+                        aProduct.file2 = file2;
+                    }else
+                    {
+                        aProduct.file2 = "NULL";
+                    }
+                    if (!string.IsNullOrEmpty(file3))
+                    {
+                        aProduct.file3 = file3;
+                    }
+                    else
+                    {
+                        aProduct.file3 = "NULL";
+                    }
+                    if (!string.IsNullOrEmpty(file4))
+                    {
+                        aProduct.file4 = file4;
+                    }
+                    else
+                    {
+                        aProduct.file4 = "NULL";
+                    }
+                    if (!string.IsNullOrEmpty(file5))
+                    {
+                        aProduct.file5 = file5;
+                    }
+                    else
+                    {
+                        aProduct.file5 = "NULL";
+                    }
+                    aProduct.userNumber = ConfigurationManager.AppSettings["userName"].ToString();
+                    var postTask = client.PostAsJsonAsync("registration/addPost.php", aProduct);
                     postTask.Wait();
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)
@@ -141,7 +99,6 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
                     else
                     {
-                        //FlashMessage.Warning("Sorry! Registration failed. Please Try again or contact with the administration.");
                         TempData["Message"] = "Sorry! Registration failed. Please Try again or contact with the administration.";
                         // TempData["class"] = MessageUtility.Error;
                         Session["IsLogin"] = false;
