@@ -10,6 +10,7 @@ using Lex_Diary_Admin_Panel.Utility;
 using System.IO;
 using System.Configuration;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Lex_Diary_Admin_Panel.Controllers
 {
@@ -35,7 +36,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Add(string productName, string productDescription, string productPrice, string file1,string file2, string file3, string file4, string file5, string thumbnailFile1)
+        public ActionResult Add(string productName, string productDescription, string productPrice,string discountPercentage, string file1,string file2, string file3, string file4, string file5, string thumbnailFile1)
         {
             
    
@@ -47,6 +48,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     aProduct.productName = productName;
                     aProduct.productDescription = productDescription;
                     aProduct.productPrice = productPrice;
+                    aProduct.discountPercentage = discountPercentage;
                     if (!string.IsNullOrEmpty(file1))
                     {
                         aProduct.file1 = file1;
@@ -104,65 +106,6 @@ namespace Lex_Diary_Admin_Panel.Controllers
                         Session["IsLogin"] = false;
                         return View();
                     }
-
-
-
-
-
-                    //if (file1 != null)
-                    //{
-
-                    //    if (file1 != null && file1.ContentLength > 0)
-                    //    {
-                    //        MemoryStream stream = new MemoryStream(file1.ContentLength);
-                    //        stream.Position = 0;
-                    //        //product.file1.FileName = file1.FileName;
-                    //        //product.file1.ContentType = file1.ContentType;
-                    //        //product.file1.InputStream = file1.InputStream;
-
-                    //    }
-
-                    //}
-                    //var img = Path.GetFileName(file1.FileName);
-
-                    //if (ModelState.IsValid)
-                    //{
-                    //    if (file1 != null && file1.ContentLength > 0)
-                    //    {
-                    //        var path = Path.Combine(Server.MapPath("http://sellinbd.com/Lawyer-Shopregistration/lawyer_products/"),
-                    //                                System.IO.Path.GetFileName(file1.FileName));
-                    //        file1.SaveAs(path);
-
-
-                    //    }
-                    //    string targetFolder = HttpContext.Current.Server.MapPath("http://sellinbd.com/Lawyer-Shopregistration/lawyer_products/");
-                    //string targetPath = Path.Combine(targetFolder, file1.FileName);
-                    //file1.SaveAs(targetPath);
-
-
-
-                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    //var postTask = client.PostAsJsonAsync("registration/addPostLawyerShop.php", product);
-                    //postTask.Wait();
-                    //var result = postTask.Result;
-                    //if (result.IsSuccessStatusCode)
-                    //{
-
-                    //    TempData["Message"] = "Product saved successfully";
-                    //    //TempData["class"] = MessageUtility.Success;
-                    //    // Session["IsLogin"] = false;
-
-                    //    return RedirectToAction("Add", "Product");
-                    //}
-
-                    //else
-                    //{
-                    //    //FlashMessage.Warning("Sorry! Registration failed. Please Try again or contact with the administration.");
-                    //    TempData["Message"] = "Sorry! Registration failed. Please Try again or contact with the administration.";
-                    //    // TempData["class"] = MessageUtility.Error;
-                    //    Session["IsLogin"] = false;
-                    //    return View();
-                    //}
                 }
 
 
@@ -178,6 +121,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
         public ActionResult List()
         {
+            List<Product> products = new List<Product>();
             bool isLogin = false;
             if (Session["isLogin"] != null)
             {
@@ -188,7 +132,39 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 Session["isLogin"] = false;
                 return RedirectToAction("Login", "Home");
             }
-            return View();
+
+            try
+            {
+
+                using (var client = new HttpClientDemo())
+                {
+                  
+                    var responseTask = client.GetAsync("product/readProducts.php");
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var resultTask = result.Content.ReadAsStringAsync().Result;
+                        products = JsonConvert.DeserializeObject<List<Product>>(resultTask);
+                        TempData["Message"] = "Product get Successfully";
+                        TempData["class"] = MessageUtility.Success;
+                    }
+                    else
+                    {
+                        products = null;
+                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                        TempData["class"] = MessageUtility.Error;
+                    }
+                    //return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception e)
+            {
+               // Session["isLogin"] = "NoAccount";
+                //return RedirectToAction("Logout", "Login");
+            }
+            return View(products);
         }
     }
 }

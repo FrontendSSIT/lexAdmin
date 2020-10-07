@@ -1,10 +1,10 @@
-﻿
+﻿@model IEnumerable <Lex_Diary_Admin_Panel.Models.Product>
 @{
+    var productList = Model;
     ViewBag.Title = "List";
 }
 <link href="~/Content/template-content/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <!-- Begin Page Content -->
-<div class="container-fluid">
 
     <!-- Page Heading -->
     @*<h1 class="h3 mb-2 text-gray-800">Tables</h1>
@@ -22,362 +22,31 @@
                         <tr>
                             <th>Product</th>
                             <th>Product Details</th>
-                            <th>Description</th>
                             <th>Price</th>
+                            <th>Diacount Percentage</th>
                            
                         </tr>
                     </thead>
                     
                     <tbody>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>System Architect</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Accountant</td>
-                            <td>2011/07/25</td>
-                            <td>$170,750</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Junior Technical Author</td>
-                            <td>2009/01/12</td>
-                            <td>$86,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Senior Javascript Developer</td>
-                            <td>2012/03/29</td>
-                            <td>$433,060</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Accountant</td>
-                            <td>2008/11/28</td>
-                            <td>$162,700</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Integration Specialist</td>
-                            <td>2012/12/02</td>
-                            <td>$372,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Sales Assistant</td>
-                            <td>2012/08/06</td>
-                            <td>$137,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Integration Specialist</td>
-                            <td>2010/10/14</td>
-                            <td>$327,900</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Javascript Developer</td>
-                            <td>2009/09/15</td>
-                            <td>$205,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.maxell.eu/wp-content/uploads/2018/10/303994_FUSION-EARPHONES-ROSSO_Product-angle-200x200.jpg" /></td>
-                            <td>Software Engineer</td>
-                            <td>2008/12/13</td>
-                            <td>$103,600</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Office Manager</td>
-                            <td>2008/12/19</td>
-                            <td>$90,560</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Support Lead</td>
-                            <td>2013/03/03</td>
-                            <td>$342,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Regional Director</td>
-                            <td>2008/10/16</td>
-                            <td>$470,600</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Senior Marketing Designer</td>
-                            <td>2012/12/18</td>
-                            <td>$313,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Regional Director</td>
-                            <td>2010/03/17</td>
-                            <td>$385,750</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Marketing Designer</td>
-                            <td>2012/11/27</td>
-                            <td>$198,500</td>
-                        </tr>
-                        <tr>
-                            <td>Paul Byrd</td>
-                            <td>Chief Financial Officer (CFO)</td>
-                            <td>2010/06/09</td>
-                            <td>$725,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Systems Administrator</td>
-                            <td>2009/04/10</td>
-                            <td>$237,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Software Engineer</td>
-                            <td>2012/10/13</td>
-                            <td>$132,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Personnel Lead</td>
-                            <td>2012/09/26</td>
-                            <td>$217,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Development Lead</td>
-                            <td>2011/09/03</td>
-                            <td>$345,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Chief Marketing Officer (CMO)</td>
-                            <td>2009/06/25</td>
-                            <td>$675,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Pre-Sales Support</td>
-                            <td>2011/12/12</td>
-                            <td>$106,450</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Sales Assistant</td>
-                            <td>2010/09/20</td>
-                            <td>$85,600</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Chief Executive Officer (CEO)</td>
-                            <td>2009/10/09</td>
-                            <td>$1,200,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Developer</td>
-                            <td>2010/12/22</td>
-                            <td>$92,575</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Regional Director</td>
-                            <td>2010/11/14</td>
-                            <td>$357,650</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Software Engineer</td>
-                            <td>2011/06/07</td>
-                            <td>$206,850</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Chief Operating Officer (COO)</td>
-                            <td>2010/03/11</td>
-                            <td>$850,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Regional Marketing</td>
-                            <td>2011/08/14</td>
-                            <td>$163,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Integration Specialist</td>
-                            <td>2011/06/02</td>
-                            <td>$95,400</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Developer</td>
-                            <td>2009/10/22</td>
-                            <td>$114,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Technical Author</td>
-                            <td>2011/05/07</td>
-                            <td>$145,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Team Leader</td>
-                            <td>2008/10/26</td>
-                            <td>$235,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Post-Sales support</td>
-                            <td>2011/03/09</td>
-                            <td>$324,050</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Marketing Designer</td>
-                            <td>2009/12/09</td>
-                            <td>$85,675</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Office Manager</td>
-                            <td>2008/12/16</td>
-                            <td>$164,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Secretary</td>
-                            <td>2010/02/12</td>
-                            <td>$109,850</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Financial Controller</td>
-                            <td>2009/02/14</td>
-                            <td>$452,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Office Manager</td>
-                            <td>2008/12/11</td>
-                            <td>$136,200</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Director</td>
-                            <td>2008/09/26</td>
-                            <td>$645,750</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Support Engineer</td>
-                            <td>2011/02/03</td>
-                            <td>$234,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Software Engineer</td>
-                            <td>2011/05/03</td>
-                            <td>$163,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Support Engineer</td>
-                            <td>2009/08/19</td>
-                            <td>$139,575</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Developer</td>
-                            <td>2013/08/11</td>
-                            <td>$98,540</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Support Engineer</td>
-                            <td>2009/07/07</td>
-                            <td>$87,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Data Coordinator</td>
-                            <td>2012/04/09</td>
-                            <td>$138,575</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" />/td>
-                            <td>Software Engineer</td>
-                            <td>2010/01/04</td>
-                            <td>$125,250</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Software Engineer</td>
-                            <td>2012/06/01</td>
-                            <td>$115,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Junior Javascript Developer</td>
-                            <td>2013/02/01</td>
-                            <td>$75,650</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Sales Assistant</td>
-                            <td>2011/12/06</td>
-                            <td>$145,600</td>
-                        </tr>
-                        <tr>
-                            <td>Hermione Butler</td>
-                            <td>Regional Director</td>
-                            <td>2011/03/21</td>
-                            <td>$356,250</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Systems Administrator</td>
-                            <td>2009/02/27</td>
-                            <td>$103,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Developer</td>
-                            <td>2010/07/14</td>
-                            <td>$86,500</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Regional Director</td>
-                            <td>2008/11/13</td>
-                            <td>$183,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png" /></td>
-                            <td>Javascript Developer</td>
-                            <td>2011/06/27</td>
-                            <td>$183,000</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://www.gizmochina.com/wp-content/uploads/2019/12/OPPO-F15-400x400.png"/></td>
-                            <td>Customer Support</td>
-                            <td>2011/01/25</td>
-                            <td>$112,000</td>
-                        </tr>
+                        @foreach (var product in productList)
+                        {
+                            <tr>
+                                <td><img src="@product.thumbnail"  style="width:100%;height:auto"/></td>
+                                <td>@product.productName <br />
+                                    <b>Product Description:</b> @product.productDescription<br/><br/>
+                                    <b>Rating:</b> @product.rating
+                                </td>
+                                <td>@product.productPrice</td>
+                                <td>@product.discountPercentage</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-</div>
 <!-- /.container-fluid -->
 
 @section Scripts{
