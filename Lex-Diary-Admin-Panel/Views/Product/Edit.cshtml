@@ -1,0 +1,145 @@
+﻿@model Lex_Diary_Admin_Panel.Models.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+
+    var colorList = ViewBag.ColorList;
+}
+<style>
+    p{
+        color:cornflowerblue;
+    }
+</style>
+<h2 style="text-align:center">Edit Product</h2>
+
+@using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.productName,"Product Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.productName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.productName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.productDescription,"Product Description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.productDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.productDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.productPrice,"Product Price", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.productPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.productPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+     
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.discountPercentage,"Discount Percentage", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.discountPercentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.discountPercentage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+     
+        <div class="form-group">
+            <label class="control-label col-md-2">Available Colors</label>
+            <div class="col-md-10">
+               <p> Current Avaiable colors: @Model.colors</p>
+                @Html.ValidationMessageFor(model => model.colors, "", new { @class = "text-danger" })
+
+                <select id="colors" name="colors" class="multiselect-ui form-control" multiple="multiple">
+                    @foreach (var color in colorList)
+                    {
+
+                        <option value="@color.color">@color.color</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Available Sizes</label>
+            <div class="col-md-10">
+                <p> Current Avaiable colors: @Model.sizes</p>
+                @Html.ValidationMessageFor(model => model.sizes, "", new { @class = "text-danger" })
+
+
+                <select id="sizes" name="sizes" class="multiselect-ui form-control" multiple="multiple">
+                    @for (int i = 1; i <= 50; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+            <div class="row" style="border: 1px solid #dddddd">
+                <div class="col-md-2">
+                    <img src="@Model.file1" style="width:100%;" />
+             
+                </div>
+                <div class="col-md-2">
+                    <img src="@Model.file2" style="width:100%;" />
+
+                    @Html.ValidationMessageFor(model => model.file2, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    <img src="@Model.file3" style="width:100%;" />
+
+                    @Html.ValidationMessageFor(model => model.file3, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    <img src="@Model.file4" style="width:100%;" />
+
+                    @Html.ValidationMessageFor(model => model.file4, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    <img src="@Model.file5" style="width:100%;" />
+
+                    @Html.ValidationMessageFor(model => model.file5, "", new { @class = "text-danger" })
+                </div>
+               
+            </div>
+            <button class="btn btn-primary"> Edit Image </button>
+        </div>*@
+
+
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <input type="submit" value="Save" class="btn btn-default btn-primary" />
+                </div>
+                <div class="col-md-4" style="text-align:right">
+                    <input type="button" value="Edit Images" class="btn btn-default btn-success" onclick="location.href ='@Url.Action("EditProductImage", "Product")?id=@Model.Id'"/>
+                </div>
+                <div class="col-md-2" style="text-align:right">
+                   
+                </div>
+            </div>
+           
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>

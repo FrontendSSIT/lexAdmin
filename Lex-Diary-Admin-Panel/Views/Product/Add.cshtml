@@ -1,8 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "Add";
-}
 
+    var colorList = ViewBag.ColorList;
+    var colorList1 = ViewBag.ColorList;
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/css/multi-select.css" integrity="sha512-2sFkW9HTkUJVIu0jTS8AUEsTk8gFAFrPmtAxyzIhbeXHRH8NXhBFnLAMLQpuhHF/dL5+sYoNHWYYX2Hlk+BVHQ==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/css/multi-select.min.css" integrity="sha512-3lMc9rpZbcRPiC3OeFM3Xey51i0p5ty5V8jkdlNGZLttjj6tleviLJfHli6p8EpXZkCklkqNt8ddSroB3bvhrQ==" crossorigin="anonymous" />
 <div class="row">
     <div class="col-md-2">
 
@@ -30,6 +34,34 @@
 
             </div>
         </div>*@
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="colors">Choose Available Color</label>
+            <div class="col-sm-10">
+               
+                <select id="colors" name="colors" class="multiselect-ui form-control" multiple="multiple">
+                    @foreach (var color in colorList)
+                    {
+                        <option value="@color.color">@color.color</option>
+                    }
+                    
+                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="sizes">Choose Available Sizes (inches)</label>
+            <div class="col-sm-10">
+
+                <select id="sizes" name="sizes" class="multiselect-ui form-control" multiple="multiple">
+                    @for (int i=1; i<=50;i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+
+
+                </select>
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="productDescription">Description</label>
             <div class="col-sm-10">
@@ -97,6 +129,9 @@
     </div>
 </div>
 @section Scripts{
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/js/jquery.multi-select.js"></script>
     <script type="text/javascript">
         $(function() {
             $("#discountPercentage").keydown(function(e) {

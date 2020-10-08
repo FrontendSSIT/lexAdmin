@@ -1,0 +1,39 @@
+﻿@model Lex_Diary_Admin_Panel.Models.Product
+@{
+    ViewBag.Title = "EditProductImage";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+
+<h2>Edit Product Image</h2>
+
+<div class="form-group">
+        <div class="row" style="border: 1px solid #dddddd">
+            <div class="col-md-2" style="text-align:right">
+                <img src="@Model.file1" style="width:100%;" />
+                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
+            </div>
+            <div class="col-md-2">
+                <img src="@Model.file2" style="width:100%;" />
+                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
+                @Html.ValidationMessageFor(model => model.file2, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                <img src="@Model.file3" style="width:100%;" />
+                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
+                @Html.ValidationMessageFor(model => model.file3, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                <img src="@Model.file4" style="width:100%;" />
+                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
+                @Html.ValidationMessageFor(model => model.file4, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                <img src="@Model.file5" style="width:100%;" />
+                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
+                @Html.ValidationMessageFor(model => model.file5, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        
+    </div>
+

@@ -11,6 +11,7 @@ using System.IO;
 using System.Configuration;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using Lex_Diary_Admin_Panel.Models.ViewModels;
 
 namespace Lex_Diary_Admin_Panel.Controllers
 {
@@ -33,53 +34,90 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 Session["isLogin"] = false;
                 return RedirectToAction("Login", "Home");
             }
-            return View();
+            using (var client = new HttpClientDemo())
+            {
+                List<Color> colorList = new List<Color>();
+                var responseTask = client.GetAsync("product/readColors.php");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var resultTask = result.Content.ReadAsStringAsync().Result;
+                    colorList = JsonConvert.DeserializeObject<List<Color>>(resultTask);
+                    Session["ColorList"] = colorList;
+                    ViewBag.ColorList = colorList.ToList();
+                }
+                else
+                {
+                    colorList = null;
+                   
+                }
+            }
+                return View();
         }
         [HttpPost]
-        public ActionResult Add(string productName, string productDescription, string productPrice,string discountPercentage, string file1,string file2, string file3, string file4, string file5, string thumbnailFile1)
+        public ActionResult Add(Product product,string thumbnailFile1, List<string> colors, List<int> sizes)
         {
+
             
-   
             try
             {
+                Product aProduct = new Product();
                 using (var client = new HttpClientDemo())
                 {
-                    Product aProduct = new Product();
-                    aProduct.productName = productName;
-                    aProduct.productDescription = productDescription;
-                    aProduct.productPrice = productPrice;
-                    aProduct.discountPercentage = discountPercentage;
-                    if (!string.IsNullOrEmpty(file1))
+
+
+                   
+                    if (sizes != null)
                     {
-                        aProduct.file1 = file1;
+                        var sizeString = String.Join(",", sizes);
+                        aProduct.sizes = sizeString;
+                    }
+                    else aProduct.sizes = "NULL";
+                    if (colors != null)
+                    {
+                        var colorString = String.Join(",", colors);
+                        aProduct.colors = colorString;
+                    }
+                    else aProduct.colors = "NULL";
+
+                    aProduct.productName = product.productName;
+                    aProduct.productDescription = product.productDescription;
+                    aProduct.productPrice = product.productPrice;
+                    aProduct.discountPercentage = product.discountPercentage;
+                    if (!string.IsNullOrEmpty(product.file1))
+                    {
+                        aProduct.file1 = product.file1;
                         aProduct.thumbnail = thumbnailFile1;
                     }
-                    if (!string.IsNullOrEmpty(file2))
+                    if (!string.IsNullOrEmpty(product.file2))
                     {
-                        aProduct.file2 = file2;
-                    }else
+                        aProduct.file2 = product.file2;
+                    }
+                    else
                     {
                         aProduct.file2 = "NULL";
                     }
-                    if (!string.IsNullOrEmpty(file3))
+                    if (!string.IsNullOrEmpty(product.file3))
                     {
-                        aProduct.file3 = file3;
+                        aProduct.file3 = product.file3;
                     }
                     else
                     {
                         aProduct.file3 = "NULL";
                     }
-                    if (!string.IsNullOrEmpty(file4))
+                    if (!string.IsNullOrEmpty(product.file4))
                     {
-                        aProduct.file4 = file4;
+                        aProduct.file4 = product.file4;
                     }
                     else
                     {
                         aProduct.file4 = "NULL";
                     }
-                    if (!string.IsNullOrEmpty(file5))
+                    if (!string.IsNullOrEmpty(product.file5))
                     {
-                        aProduct.file5 = file5;
+                        aProduct.file5 = product.file5;
                     }
                     else
                     {
@@ -165,6 +203,108 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 //return RedirectToAction("Logout", "Login");
             }
             return View(products);
+        }
+        public ActionResult Edit(int id)
+        {
+            Product product = new Product();
+            try
+            {
+                using (var client = new HttpClientDemo())
+                {
+                    List<Color> colorList = new List<Color>();
+                    var responseTask = client.GetAsync("product/readColors.php");
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var resultTask = result.Content.ReadAsStringAsync().Result;
+                        colorList = JsonConvert.DeserializeObject<List<Color>>(resultTask);
+                        Session["ColorList"] = colorList;
+                        ViewBag.ColorList = colorList.ToList();
+                    }
+                    else
+                    {
+                        colorList = null;
+
+                    }
+                }
+                    using (var client = new HttpClientDemo())
+                {
+
+                    var responseTask = client.GetAsync("product/readProduct.php?id="+id);
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var resultTask = result.Content.ReadAsStringAsync().Result;
+                        product = JsonConvert.DeserializeObject<Product>(resultTask);
+                        TempData["Message"] = "Product get Successfully";
+                        TempData["class"] = MessageUtility.Success;
+                    }
+                    else
+                    {
+                        product = null;
+                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                        TempData["class"] = MessageUtility.Error;
+                    }
+                    //return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return View(product);
+        }
+
+        public ActionResult EditProductDetails(Product product, List<string> colors, List<int> sizes)
+        {
+            return RedirectToAction("List", "Product");
+        }
+        public ActionResult EditProductImage(int id)
+        {
+            Product product = new Product();
+            try
+            {
+             
+                using (var client = new HttpClientDemo())
+                {
+
+                    var responseTask = client.GetAsync("product/readProduct.php?id=" + id);
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var resultTask = result.Content.ReadAsStringAsync().Result;
+                        product = JsonConvert.DeserializeObject<Product>(resultTask);
+                        TempData["Message"] = "Product get Successfully";
+                        TempData["class"] = MessageUtility.Success;
+                    }
+                    else
+                    {
+                        product = null;
+                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                        TempData["class"] = MessageUtility.Error;
+                    }
+                    //return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult EditProductImage(Product product, List<string> colors, List<int> sizes)
+        {
+            return RedirectToAction("List", "Product");
         }
     }
 }

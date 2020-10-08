@@ -24,6 +24,9 @@ namespace Lex_Diary_Admin_Panel.Models
         public string date { get; set; }
         public string discountPercentage { get; set; }
         public string userNumber { get; set; }
-       
+        public string colors { get; set; }
+        public string sizes { get; set; }
+        public string discountPrice { get; set; }
+
     }
 }
