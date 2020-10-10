@@ -187,6 +187,11 @@ namespace Lex_Diary_Admin_Panel.Controllers
                         products = JsonConvert.DeserializeObject<List<Product>>(resultTask);
                         TempData["Message"] = "Product get Successfully";
                         TempData["class"] = MessageUtility.Success;
+                        foreach(var product in products)
+                        {
+                            List<string> listOfNames = new List<string>(product.colors.Split(','));
+                            string[] listOfColors =  listOfNames[0].Split(':');
+                        }
                     }
                     else
                     {
@@ -240,6 +245,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     {
                         var resultTask = result.Content.ReadAsStringAsync().Result;
                         product = JsonConvert.DeserializeObject<Product>(resultTask);
+                        Session["ProductDetails"] = product;
                         TempData["Message"] = "Product get Successfully";
                         TempData["class"] = MessageUtility.Success;
                     }
@@ -261,6 +267,55 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
         public ActionResult EditProductDetails(Product product, List<string> colors, List<int> sizes)
         {
+            ProductVM aProduct = new ProductVM();
+            aProduct.id = product.Id;
+            aProduct.productName = product.productName;
+            aProduct.productPrice = product.productPrice;
+            aProduct.productDescription = product.productDescription;
+            aProduct.discountPercentage = product.discountPercentage;
+           
+            Product productDetails = (Product) Session["ProductDetails"];
+            if (colors == null)
+            {
+                aProduct.colors = productDetails.colors;
+            }else
+            {
+                var colorString = String.Join(",", colors);
+                aProduct.colors = colorString;
+            }
+            if (sizes == null)
+            {
+                aProduct.sizes = productDetails.sizes;
+            }else
+            {
+                var sizeString = String.Join(",", sizes);
+                aProduct.sizes = sizeString;
+            }
+            using (var client = new HttpClientDemo())
+            {
+                var postTask = client.PostAsJsonAsync("registration/updateProductDescription.php", aProduct);
+                postTask.Wait();
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    TempData["Message"] = "Product updated successfully";
+                    //TempData["class"] = MessageUtility.Success;
+                    // Session["IsLogin"] = false;
+
+                    return RedirectToAction("List", "Product");
+                }
+
+                else
+                {
+                    TempData["Message"] = "Sorry! product update failed. Please Try again or contact with the administration.";
+                    // TempData["class"] = MessageUtility.Error;
+                    //Session["IsLogin"] = false;
+                    return View();
+                }
+            }
+
+
             return RedirectToAction("List", "Product");
         }
         public ActionResult EditProductImage(int id)
@@ -302,7 +357,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
             return View(product);
         }
         [HttpPost]
-        public ActionResult EditProductImage(Product product, List<string> colors, List<int> sizes)
+        public ActionResult EditProductImage(Product product)
         {
             return RedirectToAction("List", "Product");
         }

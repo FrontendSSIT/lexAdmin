@@ -13,7 +13,7 @@
 </style>
 <h2 style="text-align:center">Edit Product</h2>
 
-@using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditProductDetails", "Product", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -67,7 +67,7 @@
                     @foreach (var color in colorList)
                     {
 
-                        <option value="@color.color">@color.color</option>
+                        <option value="@color.color:@color.colorCode">@color.color</option>
                     }
                 </select>
             </div>
@@ -128,9 +128,9 @@
                 <div class="col-md-6">
                     <input type="submit" value="Save" class="btn btn-default btn-primary" />
                 </div>
-                <div class="col-md-4" style="text-align:right">
+                @*<div class="col-md-4" style="text-align:right">
                     <input type="button" value="Edit Images" class="btn btn-default btn-success" onclick="location.href ='@Url.Action("EditProductImage", "Product")?id=@Model.Id'"/>
-                </div>
+                </div>*@
                 <div class="col-md-2" style="text-align:right">
                    
                 </div>
@@ -139,6 +139,7 @@
         </div>
     </div>
 }
+<input type="button" value="Edit Images" class="btn btn-default btn-success" onclick="location.href ='@Url.Action("EditProductImage", "Product")?id=@Model.Id'" />
 
 <div>
     @Html.ActionLink("Back to List", "List")

@@ -41,7 +41,7 @@
                 <select id="colors" name="colors" class="multiselect-ui form-control" multiple="multiple">
                     @foreach (var color in colorList)
                     {
-                        <option value="@color.color">@color.color</option>
+                        <option value="@color.color:@color.colorCode">@color.color</option>
                     }
                     
                    

@@ -16,8 +16,8 @@
             <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive table-responsive{-sm|-md|-lg|-xl}">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Product</th>
@@ -26,7 +26,6 @@
                             <th>Discount Percentage</th>
                             <th>After Discount Price</th>
                             <th>Action</th>
-                           
                         </tr>
                     </thead>
                     
@@ -34,17 +33,17 @@
                         @foreach (var product in productList)
                         {
                             <tr>
-                                <td style="width:20%"> <img src="@product.thumbnail" style="width:250px;height:auto"/></td>
-                                <td style="width:35%">@product.productName <br />
+                                <td style="width:20%"> <img src="@product.thumbnail" style="width:180px;height:auto"/></td>
+                                <td style="width:30%">@product.productName <br />
                                     <b>Product Description:</b> @product.productDescription<br/><br/>
                                     <b>Rating:</b> @product.rating<br />
                                     <b>Available Colors:</b> @product.colors<br />
                                     <b>Available Sizes:</b> @product.sizes (inches)<br />
                                 </td>
-                                <td style="width:10%">@product.productPrice BDT</td>
-                                <td style="width:10%">@product.discountPercentage %</td>
-                                <td style="width:10%">@product.discountPrice BDT</td>
-                                <td style="width:15%">
+                                <td style="width:15%">@product.productPrice BDT</td>
+                                <td style="width:15%">@product.discountPercentage %</td>
+                                <td>@product.discountPrice BDT</td>
+                                <td style="width:20%">
                                     <button class="btn btn-primary" style="padding: 5px 25px 5px 25px;" onclick="location.href ='@Url.Action("Edit", "Product")?id=@product.Id'">Edit</button>
                                     <button class="btn btn-danger" style="padding: 5px 17px 5px 17px;" >delete </button>
                                 </td>

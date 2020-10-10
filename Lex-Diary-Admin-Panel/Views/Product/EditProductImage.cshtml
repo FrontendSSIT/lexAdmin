@@ -3,37 +3,290 @@
     ViewBag.Title = "EditProductImage";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
+<section>
+    <h2>Edit Product Image</h2>
+    @using (Html.BeginForm("EditProductImage", "Product", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <div class="row" style="border: 1px solid #dddddd">
+                <input type="hidden" id="file1" name="file1" />
+                <input type="hidden" id="thumbnailFile1" name="thumbnailFile1" />
 
-<h2>Edit Product Image</h2>
+                <input type="hidden" id="file2" name="file2" />
+                <input type="hidden" id="thumbnailFile2" name="thumbnailFile2" />
 
-<div class="form-group">
-        <div class="row" style="border: 1px solid #dddddd">
-            <div class="col-md-2" style="text-align:right">
-                <img src="@Model.file1" style="width:100%;" />
-                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
-            </div>
-            <div class="col-md-2">
-                <img src="@Model.file2" style="width:100%;" />
-                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
-                @Html.ValidationMessageFor(model => model.file2, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-2">
-                <img src="@Model.file3" style="width:100%;" />
-                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
-                @Html.ValidationMessageFor(model => model.file3, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-2">
-                <img src="@Model.file4" style="width:100%;" />
-                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
-                @Html.ValidationMessageFor(model => model.file4, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-2">
-                <img src="@Model.file5" style="width:100%;" />
-                <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
-                @Html.ValidationMessageFor(model => model.file5, "", new { @class = "text-danger" })
+                <input type="hidden" id="file3" name="file3" />
+                <input type="hidden" id="thumbnailFile3" name="thumbnailFile3" />
+
+                <input type="hidden" id="file4" name="file4" />
+                <input type="hidden" id="thumbnailFile4" name="thumbnailFile4" />
+
+                <input type="hidden" id="file5" name="file5" />
+                <input type="hidden" id="thumbnailFile5" name="thumbnailFile5" />
+
+
             </div>
 
         </div>
-        
-    </div>
 
+    }
+    <div class="form-group">
+        <div class="row" style="border: 1px solid #dddddd">
+            <div class="col-md-2" style="text-align:right">
+        @if (Model.file1 == "NULL")
+        {
+        <img src="@Model.file1" style="width:200px;height:200px" id="img1"/>
+        <input type="file" id="img1" onchange="encodeImgtoBase64(this, '1')"/>
+
+        }
+        else
+        {
+        <img src="@Model.file1" style="width:200px;height:200px" id="img1" />
+        <input type="file" onchange="encodeImgtoBase64(this, '1')"/>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#Modal1">Delete</button>
+        }
+
+            </div>
+            <div class="col-md-2">
+         @if (Model.file2 == "NULL")
+        {
+        <img src="@Model.file2" style="width:200px;height:200px" id="img2" />
+        <input type="file" onchange="encodeImgtoBase64(this, '2')" />
+
+        }
+        else
+        {
+
+        <img src="@Model.file2" style="width:200px;height:200px" id="img2" />
+        <input type="file" onchange="encodeImgtoBase64(this, '2')" />
+        <button style="margin:10px" class="btn btn-danger">Delete</button>
+        @Html.ValidationMessageFor(model => model.file2, "", new { @class = "text-danger" })
+        }
+
+            </div>
+            <div class="col-md-2">
+        @if (Model.file3 == "NULL")
+        {
+        <img src="@Model.file3" style="width:200px;height:200px" id="img3" />
+        <input type="file" onchange="encodeImgtoBase64(this, '3')" />
+
+        }
+        else
+        {
+
+        <img src="@Model.file3" style="width:200px;height:200px" id="img3" />
+        <input type="file" onchange="encodeImgtoBase64(this, '3')" />
+        <button style="margin:10px" class="btn btn-danger">Delete</button>
+        @Html.ValidationMessageFor(model => model.file3, "", new { @class = "text-danger" })
+        }
+
+            </div>
+            <div class="col-md-2">
+        @if (Model.file4 == "NULL")
+        {
+
+        <img src="@Model.file4" style="width:200px;height:200px" id="img4" />
+        <input type="file" onchange="encodeImgtoBase64(this, '4')" />
+
+        }
+        else
+        {
+
+        <img src="@Model.file4" style="width:200px;height:200px" id="img4" />
+        <input type="file" onchange="encodeImgtoBase64(this, '4')" /><button style="margin:10px" class="btn btn-danger">Delete</button>
+        @Html.ValidationMessageFor(model => model.file4, "", new { @class = "text-danger" })
+        }
+
+            </div>
+            <div class="col-md-2">
+        @if (Model.file5 == "NULL")
+        {
+        <img src="@Model.file5" style="width:200px;height:200px" id="img5" />
+        <input type="file" onchange="encodeImgtoBase64(this, '5')" />
+
+        }
+        else
+        {
+        <img src="@Model.file5" style="width:20px;height:200px" id="img5"/>
+        <input type="file" onchange="encodeImgtoBase64(this, '5')" />
+        <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
+        @Html.ValidationMessageFor(model => model.file5, "", new { @class = "text-danger" })
+        }
+
+            </div>
+            </div>
+        </div>
+</section>
+
+
+
+
+
+    @*<div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Insert new image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" onclick="encodeImgtoBase64(this, '1')"/>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" >Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Insert new image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="encodeImgtoBase64(this, '2')">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Insert new image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="encodeImgtoBase64(this, '3')">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Modal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Insert new image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="encodeImgtoBase64(this, '4')">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Modal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Insert new image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="encodeImgtoBase64(this, '5')">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    @section Scripts{
+        <script type="text/javascript">
+
+            function encodeImgtoBase64(element, fileNo) {
+
+                var file = element.files[0];
+
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+
+                    var text = reader.result;
+                    var imageFile = text.replace(/^data:image\/[a-z]+;base64,/, "");
+                    $('#file' + fileNo).val(imageFile);
+                    //  $("#convertImg").attr("src", reader.result);
+                    //$("#convertImg").text(reader.result);
+                    $("#img" + fileNo).attr("src", "");
+                    $("#img" + fileNo).attr("src", reader.result);
+
+                    var sourceImage = text,
+                    thumbnail = document.getElementById("thumbnail");
+
+                    thumbnailify(sourceImage, 300, function (base64Thumbnail) {
+                        //thumbnail.src = base64Thumbnail;
+                        //$("#thumbnail").attr("src", base64Thumbnail);
+                        var thumbnailImage = base64Thumbnail.replace(/^data:image\/[a-z]+;base64,/, "");
+                        $('#thumbnailFile' + fileNo).val(thumbnailImage);
+                    });
+                }
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+
+
+            }
+            function thumbnailify(base64Image, targetSize, callback) {
+                var img = new Image();
+
+                img.onload = function () {
+                    var width = img.width,
+                        height = img.height,
+                        canvas = document.createElement('canvas'),
+                        ctx = canvas.getContext("2d");
+
+                    canvas.width = canvas.height = targetSize;
+
+                    ctx.drawImage(
+                      img,
+                      width > height ? (width - height) / 2 : 0,
+                      height > width ? (height - width) / 2 : 0,
+                      width > height ? height : width,
+                      width > height ? height : width,
+                      0, 0,
+                      targetSize, targetSize
+                    );
+
+                    callback(canvas.toDataURL());
+                };
+
+                img.src = base64Image;
+            };
+
+
+        </script>
+
+
+    }
