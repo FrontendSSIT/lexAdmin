@@ -9,6 +9,9 @@
     {
         <div class="form-group">
             <div class="row" style="border: 1px solid #dddddd">
+                @Html.HiddenFor(model => model.Id)
+
+
                 <input type="hidden" id="file1" name="file1" />
                 <input type="hidden" id="thumbnailFile1" name="thumbnailFile1" />
 
@@ -28,94 +31,66 @@
             </div>
 
         </div>
+        <div class="form-group">
+            <div class="row" style="border: 1px solid #dddddd">
+                <div class="col-md-2" style="text-align:right">
+                    @if (Model.file1 == "NULL")
+                    {
+                        <img src="@Model.file1" style="width:200px;height:200px" id="img1" />
+                        <input type="file" id="img1" onchange="encodeImgtoBase64(this, '1')" required />
 
-    }
-    <div class="form-group">
-        <div class="row" style="border: 1px solid #dddddd">
-            <div class="col-md-2" style="text-align:right">
-        @if (Model.file1 == "NULL")
-        {
-        <img src="@Model.file1" style="width:200px;height:200px" id="img1"/>
-        <input type="file" id="img1" onchange="encodeImgtoBase64(this, '1')"/>
+                    }
+                    else
+                    {
+                        <img src="@Model.file1" style="width:200px;height:200px" id="img1" />
+                        <input type="file" onchange="encodeImgtoBase64(this, '1')"/>
+                        @*<a class="btn btn-danger" onclick="deleteImage('1')">Delete</a>*@
+                    }
 
-        }
-        else
-        {
-        <img src="@Model.file1" style="width:200px;height:200px" id="img1" />
-        <input type="file" onchange="encodeImgtoBase64(this, '1')"/>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#Modal1">Delete</button>
-        }
+                </div>
+                <div class="col-md-2">
+                  
 
-            </div>
-            <div class="col-md-2">
-         @if (Model.file2 == "NULL")
-        {
-        <img src="@Model.file2" style="width:200px;height:200px" id="img2" />
-        <input type="file" onchange="encodeImgtoBase64(this, '2')" />
+                        <img src="@Model.file2" style="width:200px;height:200px" id="img2" />
+                        <input type="file" onchange="encodeImgtoBase64(this, '2')" />
+                        <a style="margin:10px" class="btn btn-danger" onclick="deleteImage('2')">Delete</a>
 
-        }
-        else
-        {
+                   
 
-        <img src="@Model.file2" style="width:200px;height:200px" id="img2" />
-        <input type="file" onchange="encodeImgtoBase64(this, '2')" />
-        <button style="margin:10px" class="btn btn-danger">Delete</button>
-        @Html.ValidationMessageFor(model => model.file2, "", new { @class = "text-danger" })
-        }
+                </div>
+                <div class="col-md-2">
 
-            </div>
-            <div class="col-md-2">
-        @if (Model.file3 == "NULL")
-        {
-        <img src="@Model.file3" style="width:200px;height:200px" id="img3" />
-        <input type="file" onchange="encodeImgtoBase64(this, '3')" />
 
-        }
-        else
-        {
+                        <img src="@Model.file3" style="width:200px;height:200px" id="img3" />
+                        <input type="file" onchange="encodeImgtoBase64(this, '3')" />
+                        <a style="margin:10px" class="btn btn-danger" onclick="deleteImage('3')">Delete</a>
+                        
+                
+                </div>
+                <div class="col-md-2">
+                  
+                  
 
-        <img src="@Model.file3" style="width:200px;height:200px" id="img3" />
-        <input type="file" onchange="encodeImgtoBase64(this, '3')" />
-        <button style="margin:10px" class="btn btn-danger">Delete</button>
-        @Html.ValidationMessageFor(model => model.file3, "", new { @class = "text-danger" })
-        }
+                        <img src="@Model.file4" style="width:200px;height:200px" id="img4" />
+                        <input type="file" onchange="encodeImgtoBase64(this, '4')" />
+                        <a style="margin:10px" class="btn btn-danger" onclick="deleteImage('4')">Delete</a>
 
-            </div>
-            <div class="col-md-2">
-        @if (Model.file4 == "NULL")
-        {
+                </div>
+                <div class="col-md-2">
+                 
+                   
+                        <img src="@Model.file5" style="width:200px;height:200px" id="img5" />
+                        <input type="file" onchange="encodeImgtoBase64(this, '5')" />
+                        <a style="margin:10px" class="btn btn-danger" onclick="deleteImage('5')">Delete</a>
 
-        <img src="@Model.file4" style="width:200px;height:200px" id="img4" />
-        <input type="file" onchange="encodeImgtoBase64(this, '4')" />
+                  
 
-        }
-        else
-        {
-
-        <img src="@Model.file4" style="width:200px;height:200px" id="img4" />
-        <input type="file" onchange="encodeImgtoBase64(this, '4')" /><button style="margin:10px" class="btn btn-danger">Delete</button>
-        @Html.ValidationMessageFor(model => model.file4, "", new { @class = "text-danger" })
-        }
-
-            </div>
-            <div class="col-md-2">
-        @if (Model.file5 == "NULL")
-        {
-        <img src="@Model.file5" style="width:200px;height:200px" id="img5" />
-        <input type="file" onchange="encodeImgtoBase64(this, '5')" />
-
-        }
-        else
-        {
-        <img src="@Model.file5" style="width:20px;height:200px" id="img5"/>
-        <input type="file" onchange="encodeImgtoBase64(this, '5')" />
-        <button style="margin:10px" class="btn btn-primary">Edit</button><button style="margin:10px" class="btn btn-danger">Delete</button>
-        @Html.ValidationMessageFor(model => model.file5, "", new { @class = "text-danger" })
-        }
-
-            </div>
+                </div>
             </div>
         </div>
+        <button type="submit">Save Images</button>
+    }
+  
 </section>
 
 
@@ -284,7 +259,11 @@
 
                 img.src = base64Image;
             };
+            function deleteImage(fileNo) {
+                $("#img" + fileNo).attr("src", "");
+                $('#file' + fileNo).val("NULL");
 
+            }
 
         </script>
 

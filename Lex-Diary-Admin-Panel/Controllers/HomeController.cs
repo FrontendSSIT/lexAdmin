@@ -72,6 +72,32 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     }
                     //return RedirectToAction("Index", "Home");
                 }
+                List<Order> orders = new List<Order>();
+                using (var client = new HttpClientDemo())
+                {
+
+                    var responseTask = client.GetAsync("product/readOrderList.php");
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var resultTask = result.Content.ReadAsStringAsync().Result;
+                        orders = JsonConvert.DeserializeObject<List<Order>>(resultTask);
+                        Session["TotalPendingOrders"] = orders.Count;
+                        TempData["Message"] = "order list get Successfully";
+                        TempData["class"] = MessageUtility.Success;
+                    }
+                    else
+                    {
+
+                        Session["TotalPendingOrders"] = 0;
+                        orders = null;
+                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                        TempData["class"] = MessageUtility.Error;
+                    }
+                    //return RedirectToAction("Index", "Home");
+                }
             }
             catch (Exception e)
             {
@@ -117,15 +143,6 @@ namespace Lex_Diary_Admin_Panel.Controllers
             Session["isLogin"] = false;
 
             return RedirectToAction("Login","Home");
-        }
-        public ActionResult genratePDF()
-        {
-            return View();
-        }
-
-        public ActionResult genrateInvoice()
-        {
-            return View();
         }
         //private void CreatePdf(List<RequestList> requestList, LawyerList lawyerInfo)
         //{

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Lex_Diary_Admin_Panel.Models.Order>
+@using System.Collections.Generic;
+@using System.Globalization;
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+
+}
+
+@*<a href="@Url.Action("GenerateInvoice","Order")" > Generate Invoice</a>*@
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Pending Order List</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Customer Info</th>
+                            <th>Total</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{ 
+                            int i = 1;
+                           
+                        }
+                        @foreach (var order in Model)
+                        {
+                            var totalAmount = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@order.totalAmount));
+                            <tr>
+                                <td>@i</td>
+                                <td>
+                                    <b>Name </b>: @order.userName<br />
+                                    <b>Phone</b>: @order.userNumber
+                                </td>
+                                <td style="text-align:right">@totalAmount &nbsp; BDT</td>
+                                
+                                <td style="text-align:right"><a class="btn btn-success" style="color:white" href="@Url.Action("OrderDetails", "Order" , new {id = @order.o_id})"> Show Details</a></td>
+
+                            </tr>
+                            i++;
+                        }
+
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

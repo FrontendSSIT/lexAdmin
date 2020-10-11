@@ -211,6 +211,16 @@ namespace Lex_Diary_Admin_Panel.Controllers
         }
         public ActionResult Edit(int id)
         {
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (!isLogin)
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
             Product product = new Product();
             try
             {
@@ -267,6 +277,16 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
         public ActionResult EditProductDetails(Product product, List<string> colors, List<int> sizes)
         {
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (!isLogin)
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
             ProductVM aProduct = new ProductVM();
             aProduct.id = product.Id;
             aProduct.productName = product.productName;
@@ -320,6 +340,16 @@ namespace Lex_Diary_Admin_Panel.Controllers
         }
         public ActionResult EditProductImage(int id)
         {
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (!isLogin)
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
             Product product = new Product();
             try
             {
@@ -357,8 +387,139 @@ namespace Lex_Diary_Admin_Panel.Controllers
             return View(product);
         }
         [HttpPost]
-        public ActionResult EditProductImage(Product product)
+        public ActionResult EditProductImage(Product product, string thumbnailFile1)
         {
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (!isLogin)
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
+            ProductImageVM productImage1 = new ProductImageVM();
+            ProductImageVM productImage2 = new ProductImageVM();
+            ProductImageVM productImage3 = new ProductImageVM();
+            ProductImageVM productImage4 = new ProductImageVM();
+            ProductImageVM productImage5 = new ProductImageVM();
+            if (product.file1 !=null)
+            {
+                productImage1.id = product.Id.ToString();
+                productImage1.fileNo = "1";
+                productImage1.image = product.file1;
+                productImage1.thumbnail = thumbnailFile1;
+
+                using (var client = new HttpClientDemo())
+                {
+                    var postTask = client.PostAsJsonAsync("registration/updateProductImage.php", productImage1);
+                    postTask.Wait();
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+            if (product.file2 != null)
+            {
+                productImage2.id = product.Id.ToString();
+                productImage2.fileNo = "2";
+                productImage2.image = product.file2;
+                productImage2.thumbnail = "";
+
+                using (var client = new HttpClientDemo())
+                {
+                    var postTask = client.PostAsJsonAsync("registration/updateProductImage.php", productImage2);
+                    postTask.Wait();
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+            if (product.file3 != null)
+            {
+                productImage3.id = product.Id.ToString();
+                productImage3.fileNo = "3";
+                productImage3.image = product.file3;
+                productImage3.thumbnail= "";
+
+                using (var client = new HttpClientDemo())
+                {
+                    var postTask = client.PostAsJsonAsync("registration/updateProductImage.php", productImage3);
+                    postTask.Wait();
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+            if (product.file4 != null)
+            {
+                productImage4.id = product.Id.ToString();
+                productImage4.fileNo = "4";
+                productImage4.image = product.file4;
+                productImage4.thumbnail = "";
+
+                using (var client = new HttpClientDemo())
+                {
+                    var postTask = client.PostAsJsonAsync("registration/updateProductImage.php", productImage4);
+                    postTask.Wait();
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+            if (product.file5 != null)
+            {
+                productImage5.id = product.Id.ToString();
+                productImage5.fileNo = "5";
+                productImage5.image = product.file5;
+                productImage5. thumbnail = "";
+
+                using (var client = new HttpClientDemo())
+                {
+                    var postTask = client.PostAsJsonAsync("registration/updateProductImage.php", productImage5);
+                    postTask.Wait();
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+
             return RedirectToAction("List", "Product");
         }
     }
