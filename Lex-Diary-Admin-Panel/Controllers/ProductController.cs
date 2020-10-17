@@ -104,7 +104,15 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     else aProduct.colors = "NULL";
 
                     aProduct.productName = product.productName;
-                    aProduct.productDescription = product.productDescription;
+                    if (product.productDescription == null)
+                    {
+                        aProduct.productDescription = "NULL";
+                    }
+                    else
+                    {
+                             aProduct.productDescription = product.productDescription;
+                    }
+                   
                     aProduct.productPrice = product.productPrice;
                     aProduct.discountPercentage = product.discountPercentage;
                     if (!string.IsNullOrEmpty(product.file1))
