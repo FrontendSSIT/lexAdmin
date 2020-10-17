@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Banner";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+<section>
+
+    <h4 style="text-align:center">Upload Image for banner</h4>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="text-align:center;margin-top:50px">
+            @using (Html.BeginForm("Banner", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+            {
+                <input type="file" onchange="encodeImgtoBase64(this)" />
+                <input type="hidden" id="bannerImage" name="bannerImage" />
+
+                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mr-2"><i class="fas fa-crosshairs fa-sm text-white-50"></i> Save</button>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    
+    </div>
+  
+
+</section>
+
+@section Scripts{
+    <script>
+        function encodeImgtoBase64(element) {
+
+            var file = element.files[0];
+
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+
+                var text = reader.result;
+                var imageFile = text.replace(/^data:image\/[a-z]+;base64,/, "");
+                $('#bannerImage').val(imageFile);
+                //  $("#convertImg").attr("src", reader.result);
+                //$("#convertImg").text(reader.result);
+
+                //$("#base64Img").attr("src", reader.result);
+               
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+
+        }
+
+    </script>
+    
+    }

@@ -31,34 +31,32 @@
                     </thead>
 
                     <tbody>
-                        @{ 
+                        @{
                             int i = 1;
-                           
+
                         }
                         @if (Model != null)
                         {
-                            foreach (var order in Model)
-                            {
-                                var totalAmount = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@order.totalAmount));
-                                <tr>
-                                    <td>@i</td>
-                                    <td>
-                                        <b>Name </b>: @order.userName<br />
-                                        <b>Phone</b>: @order.userNumber
-                                    </td>
-                                    <td style="text-align:right">@totalAmount &nbsp; BDT</td>
+                                foreach (var order in Model)
+                                {
+                                    var totalAmount = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@order.totalAmount));
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>
+                                            <b>Name </b>: @order.userName<br />
+                                            <b>Phone</b>: @order.userNumber
+                                        </td>
+                                        <td style="text-align:right">@totalAmount &nbsp; BDT</td>
 
-                                    <td style="text-align:right"><a class="btn btn-success" style="color:white" href="@Url.Action("OrderDetails", "Order" , new {id = @order.o_id})"> Show Details</a></td>
+                                        <td style="text-align:right"><a class="btn btn-success" style="color:white" href="@Url.Action("OrderDetails", "Order" , new {id = @order.o_id})"> Show Details</a></td>
 
-                                </tr>
-                                i++;
-                            }
+                                    </tr>
+                                    i++;
+                                }
                         }
+                        
 
 
-
-
-                    
                     </tbody>
                 </table>
             </div>
@@ -67,8 +65,8 @@
 
 </div>
 @section Scripts{
-    
-   <script>
+
+    <script>
        $(document).ready(function () {
 
            $(function () {
@@ -80,6 +78,6 @@
        });
 
 
-    </script> 
-    
-    }
+    </script>
+
+}

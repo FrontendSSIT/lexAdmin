@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,7 +24,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
             }
             if (isLogin)
             {
-                return RedirectToAction("Add", "Product");
+                return RedirectToAction("DashBoard", "Home");
             }
             else
             {
@@ -72,31 +73,31 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     }
                     //return RedirectToAction("Index", "Home");
                 }
-                List<Order> orders = new List<Order>();
+               
+
                 using (var client = new HttpClientDemo())
                 {
-
-                    var responseTask = client.GetAsync("product/readOrderList.php");
+                    OrderList orderList = new OrderList();
+                    var responseTask = client.GetAsync("registration/procedural/countOrdersByStatus.php");
                     responseTask.Wait();
 
                     var result = responseTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
                         var resultTask = result.Content.ReadAsStringAsync().Result;
-                        orders = JsonConvert.DeserializeObject<List<Order>>(resultTask);
-                        Session["TotalPendingOrders"] = orders.Count;
+                        orderList = JsonConvert.DeserializeObject<OrderList>(resultTask);
+                        Session["TotalOrdeList"] = orderList;
                         TempData["Message"] = "order list get Successfully";
                         TempData["class"] = MessageUtility.Success;
                     }
                     else
                     {
 
-                        Session["TotalPendingOrders"] = 0;
-                        orders = null;
+                        Session["TotalOrdeList"] = 0;
+                        orderList = null;
                         TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
                         TempData["class"] = MessageUtility.Error;
                     }
-                    //return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception e)
@@ -107,6 +108,74 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
             return View();
         }
+
+        public ActionResult Banner()
+        {
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (!isLogin)
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Banner(string bannerImage)
+        {
+
+            try
+            {
+                bool isLogin = false;
+                if (Session["isLogin"] != null)
+                {
+                    isLogin = (bool)Session["isLogin"];
+                }
+                if (!isLogin)
+                {
+                    Session["isLogin"] = false;
+                    return RedirectToAction("Login", "Home");
+                }
+                using (var client = new HttpClientDemo())
+                {
+                    Banner banner = new Banner();
+                    banner.image = bannerImage;
+                    var postTask = client.PostAsJsonAsync("registration/updateBannerImage.php", banner);
+                    postTask.Wait();
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                        TempData["Message"] = "Banner saved successfully";
+                        //TempData["class"] = MessageUtility.Success;
+                        // Session["IsLogin"] = false;
+
+
+                    }
+
+                    else
+                    {
+                        TempData["Message"] = "Sorry! Registration failed. Please Try again or contact with the administration.";
+                        // TempData["class"] = MessageUtility.Error;
+                        Session["IsLogin"] = false;
+
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return View();
+        }
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

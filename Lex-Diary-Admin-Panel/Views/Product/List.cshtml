@@ -45,7 +45,7 @@
                                 <td>@product.discountPrice BDT</td>
                                 <td style="width:20%">
                                     <button class="btn btn-primary" style="padding: 5px 25px 5px 25px;" onclick="location.href ='@Url.Action("Edit", "Product")?id=@product.Id'">Edit</button>
-                                    <button class="btn btn-danger" style="padding: 5px 17px 5px 17px;" >delete </button>
+                                    <button class="btn btn-danger" style="padding: 5px 17px 5px 17px;" onclick="location.href ='@Url.Action("Delete", "Product")?id=@product.Id'">delete </button>
                                 </td>
                             </tr>
                         }

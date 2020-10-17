@@ -81,7 +81,7 @@
 
 
                 <select id="sizes" name="sizes" class="multiselect-ui form-control" multiple="multiple">
-                    @for (int i = 1; i <= 50; i++)
+                    @for (double i = 1; i <= 50; i=i+0.5)
                     {
                         <option value="@i">@i</option>
                     }

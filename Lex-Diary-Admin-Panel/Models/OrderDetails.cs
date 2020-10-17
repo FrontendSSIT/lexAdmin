@@ -7,9 +7,14 @@ namespace Lex_Diary_Admin_Panel.Models
 {
     public class OrderDetails
     {
+        public string thumbnail { get; set; }
         public string productName { get; set; }
-        public string price { get; set; }
-        public string size { get; set; }
-        public string color { get; set; }
+        public string quantity { get; set; }
+        public string colors { get; set; }
+        public string sizes { get; set; }
+        public string productPrice { get; set; }
+        public string totalPrice { get; set; }
+        public string discountPrice { get; set; }
+        public string discountPercentage { get; set; }
     }
 }

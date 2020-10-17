@@ -1,27 +1,58 @@
-﻿
+﻿@using Lex_Diary_Admin_Panel.Models.ViewModels
+@using Lex_Diary_Admin_Panel.Models
+@using System.Collections.Generic;
+@using System.Globalization;
 @{
     ViewBag.Title = "OrderDetails";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
+    UserDetails customerDetails =(UserDetails) Session["CustomerDetails"];
+    List<OrderDetails> orderDetailsList = (List <OrderDetails>) Session["OrderProductDetailsList"];
+    OrderPriceVM orderPrice = (OrderPriceVM)Session["OrderPriceCalculation"];
+    string orderStatus = Session["OrderStatus"].ToString();
+    int orderId = Convert.ToInt32(Session["OrderNo"]);
 }
-
+<link href="~/Content/template-content/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-end mb-4">
-     @using (Html.BeginForm("OrderDetails", "Order", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-     {
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-crosshairs fa-sm text-white-50"></i> Delete Order</a>
-        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
-     }
-        </div>
-  
+    
 
 
     <div class="row">
+        <!-- Page Heading -->
+       
 
         <!-- Area Chart -->
         <div class="col-xl-12 col-lg-12">
+            <div class="d-sm-flex align-items-center justify-content-end">
+                @if (orderStatus == "pending")
+                {
+                    using (Html.BeginForm("UpdateOrderStatus", "Order", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden" id="orderId" name="orderId" value="@orderId" />
+                        <input type="hidden" id="orderStatus" name="orderStatus" value="cancelled" />
+                        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mr-2"><i class="fas fa-crosshairs fa-sm text-white-50"></i> Cancel Order</button>
+                    }
+
+                }
+                @if (orderStatus == "pending")
+                {
+                    using (Html.BeginForm("UpdateOrderStatus", "Order", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden" id="orderId" name="orderId" value="@orderId" />
+                        <input type="hidden" id="orderStatus" name="orderStatus" value="delivered" />
+                        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mr-2"><i class="fas fa-crosshairs fa-sm text-white-50"></i> Deliver Order</button>
+                    }
+
+                }
+                @using (Html.BeginForm("OrderDetails", "Order", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+
+                    <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
+                }
+               
+               
+            </div>
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -40,12 +71,100 @@
                     </div>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                <h5 style="font-weight:bold;text-align:center;margin-bottom:10px">Customer Order History</h5>
+
+                <div class="row" style="padding:2%">
+                    <div class="col-md-6">
+                        <p>
+                            <b>Order#:</b> &nbsp; @Session["OrderNo"]<br />
+                            <b>Customer Name:</b> &nbsp; @customerDetails.userName<br />
+                            <b>Phone:</b> &nbsp; @customerDetails.userNumber<br />
+                            <b>Delivery Address:</b> &nbsp; @customerDetails.address<br />
+                            <b>Contact Person Name:</b> &nbsp; @customerDetails.cpName<br />
+                            <b>Contact Person Number:</b> &nbsp; @customerDetails.cpNumber
+
+                        </p>
+                    </div>
+                    @*<div class="col-md-6">
+                        <p>
+                            <b>Contact Person Name:</b> &nbsp; @customerDetails.cpName<br />
+                            <b>Contact Person Number:</b> &nbsp; @customerDetails.cpNumber
+
+                        </p>
+                    </div>*@
+                </div>
+                <div class="row" style="padding:0 3%">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Product</th>
+                                    <th>Color and Sizes</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Price</th>
+                                    <th>Discount Price</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var product in orderDetailsList)
+                                {
+                                    
+                                        var productPrice = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@product.productPrice));
+                                        var totalPrice = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@product.totalPrice));
+                                        var discountPrice = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@product.discountPrice));
+                                    
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            @product.productName<br />
+                                            <b>Qty</b>: @product.quantity
+                                        </td>
+                                        <td>
+                                            <b>Color</b>: @product.colors<br />
+                                            <b>Size</b>: @product.sizes
+                                        </td>
+                                        <td>@productPrice  BDT</td>
+                                        <td>@totalPrice  BDT</td>
+                                        <td>@discountPrice  BDT (@product.discountPercentage%)</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
+               
+                <div class="row" style="padding:3%;">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5">
+                        <table class="table table-borderless"  cellspacing="0" style="border:none">
+                            <tbody>
+                                @{ 
+                                    var subTotal = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orderPrice.subTotal));
+                                    var deliveryCharge = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orderPrice.deliveryCharge));
+                                    var total = String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orderPrice.total));
+                                }
+                                <tr>
+                                        <td>Subtotal</td>
+                                        <td style="text-align:right">@subTotal  BDT</td>
+                               </tr>
+                                <tr>
+                                    <td>Delivery Charge</td>
+                                    <td style="text-align:right">@deliveryCharge  BDT</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td style="text-align:right">@total  BDT</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+              
+                </div>
         </div>
 
    
@@ -54,3 +173,11 @@
 
 </div>
 <!-- /.container-fluid -->
+@section Scripts{
+    <!-- Page level custom scripts -->
+    <script src="~/Content/template-content/js/demo/datatables-demo.js"></script>
+    <!-- Page level plugins -->
+    <script src="~/Content/template-content/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/template-content/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+}

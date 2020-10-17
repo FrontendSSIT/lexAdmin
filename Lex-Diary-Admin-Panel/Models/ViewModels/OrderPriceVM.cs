@@ -7,7 +7,7 @@ namespace Lex_Diary_Admin_Panel.Models.ViewModels
 {
     public class OrderPriceVM
     {
-        public string id { get; set; }
+        
         public string subTotal { get; set; }
         public string deliveryCharge { get; set; }
         public string total { get; set; }

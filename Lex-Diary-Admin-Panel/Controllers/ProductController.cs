@@ -57,18 +57,39 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 return View();
         }
         [HttpPost]
-        public ActionResult Add(Product product,string thumbnailFile1, List<string> colors, List<int> sizes)
+        public ActionResult Add(Product product,string thumbnailFile1, List<string> colors, List<double> sizes)
         {
 
             
             try
             {
+                using (var client = new HttpClientDemo())
+                {
+                    List<Color> colorList = new List<Color>();
+                    var responseTask = client.GetAsync("product/readColors.php");
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var resultTask = result.Content.ReadAsStringAsync().Result;
+                        colorList = JsonConvert.DeserializeObject<List<Color>>(resultTask);
+                        Session["ColorList"] = colorList;
+                        ViewBag.ColorList = colorList.ToList();
+                    }
+                    else
+                    {
+                        colorList = null;
+
+                    }
+                }
+
                 Product aProduct = new Product();
                 using (var client = new HttpClientDemo())
                 {
 
 
-                   
+
                     if (sizes != null)
                     {
                         var sizeString = String.Join(",", sizes);
@@ -189,8 +210,11 @@ namespace Lex_Diary_Admin_Panel.Controllers
                         TempData["class"] = MessageUtility.Success;
                         foreach(var product in products)
                         {
-                            List<string> listOfNames = new List<string>(product.colors.Split(','));
-                            string[] listOfColors =  listOfNames[0].Split(':');
+                            List<string> listOfColors = new List<string>(product.colors.Split(',',':'));
+                            listOfColors.RemoveAll(u => u.StartsWith("#"));
+                            listOfColors.RemoveAll(u => u.Contains("NULL"));
+                            var colors = String.Join(",", listOfColors);
+                            product.colors = colors;
                         }
                     }
                     else
@@ -256,6 +280,13 @@ namespace Lex_Diary_Admin_Panel.Controllers
                         var resultTask = result.Content.ReadAsStringAsync().Result;
                         product = JsonConvert.DeserializeObject<Product>(resultTask);
                         Session["ProductDetails"] = product;
+
+                        List<string> listOfColors = new List<string>(product.colors.Split(',', ':'));
+                        listOfColors.RemoveAll(u => u.StartsWith("#"));
+                        listOfColors.RemoveAll(u => u.Contains("NULL"));
+                        var colors = String.Join(",", listOfColors);
+                        product.colors = colors;
+
                         TempData["Message"] = "Product get Successfully";
                         TempData["class"] = MessageUtility.Success;
                     }
@@ -275,7 +306,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
             return View(product);
         }
 
-        public ActionResult EditProductDetails(Product product, List<string> colors, List<int> sizes)
+        public ActionResult EditProductDetails(Product product, List<string> colors, List<double> sizes)
         {
             bool isLogin = false;
             if (Session["isLogin"] != null)
@@ -521,6 +552,53 @@ namespace Lex_Diary_Admin_Panel.Controllers
             }
 
             return RedirectToAction("List", "Product");
+        }
+
+        
+        public ActionResult Delete(int id)
+        {
+            
+            bool isLogin = false;
+            if (Session["isLogin"] != null)
+            {
+                isLogin = (bool)Session["isLogin"];
+            }
+            if (!isLogin)
+            {
+                Session["isLogin"] = false;
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+              
+                using (var client = new HttpClientDemo())
+                {
+                    
+                    int productid = id;
+                    var responseTask = client.GetAsync("product/deleteProduct.php?id="+ id + "&isDeleted=1");
+                    responseTask.Wait();
+
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                        TempData["Message"] = "Product deleted Successfully";
+                        TempData["class"] = MessageUtility.Success;
+                    }
+                    else
+                    {
+
+                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                        TempData["class"] = MessageUtility.Error;
+                    }
+                   
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return RedirectToAction("List","Product");
         }
     }
 }

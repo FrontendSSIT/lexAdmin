@@ -11,7 +11,7 @@
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    <div class="@TempData["class"]" id="flashmessage" role="alert" style="margin-top: 2%"><h4 style="font-weight: bold; text-align: center;">@TempData["Message"]</h4></div>
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -31,9 +31,9 @@
                     </thead>
 
                     <tbody>
-                        @{ 
+                        @{
                             int i = 1;
-                           
+
                         }
                         @if (Model != null)
                         {
@@ -58,7 +58,8 @@
 
 
 
-                    
+
+
                     </tbody>
                 </table>
             </div>
@@ -66,20 +67,3 @@
     </div>
 
 </div>
-@section Scripts{
-    
-   <script>
-       $(document).ready(function () {
-
-           $(function () {
-               setTimeout(function () {
-                   $("#flashmessage").hide('blind', {}, 500);
-               }, 5000);
-
-           });
-       });
-
-
-    </script> 
-    
-    }
