@@ -152,7 +152,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     {
 
                         TempData["Message"] = "Product saved successfully";
-                        //TempData["class"] = MessageUtility.Success;
+                        TempData["class"] = MessageUtility.Success;
                         // Session["IsLogin"] = false;
 
                         return RedirectToAction("Add", "Product");
@@ -161,7 +161,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     else
                     {
                         TempData["Message"] = "Sorry! Registration failed. Please Try again or contact with the administration.";
-                        // TempData["class"] = MessageUtility.Error;
+                        TempData["class"] = MessageUtility.Error;
                         Session["IsLogin"] = false;
                         return View();
                     }
@@ -287,14 +287,14 @@ namespace Lex_Diary_Admin_Panel.Controllers
                         var colors = String.Join(",", listOfColors);
                         product.colors = colors;
 
-                        TempData["Message"] = "Product get Successfully";
-                        TempData["class"] = MessageUtility.Success;
+                    //    TempData["Message"] = "Product get Successfully";
+                     //   TempData["class"] = MessageUtility.Success;
                     }
                     else
                     {
                         product = null;
-                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-                        TempData["class"] = MessageUtility.Error;
+                     //   TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                     //   TempData["class"] = MessageUtility.Error;
                     }
                     //return RedirectToAction("Index", "Home");
                 }
@@ -351,7 +351,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 {
 
                     TempData["Message"] = "Product updated successfully";
-                    //TempData["class"] = MessageUtility.Success;
+                    TempData["class"] = MessageUtility.Success;
                     // Session["IsLogin"] = false;
 
                     return RedirectToAction("List", "Product");
@@ -360,7 +360,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 else
                 {
                     TempData["Message"] = "Sorry! product update failed. Please Try again or contact with the administration.";
-                    // TempData["class"] = MessageUtility.Error;
+                     TempData["class"] = MessageUtility.Error;
                     //Session["IsLogin"] = false;
                     return View();
                 }
@@ -396,14 +396,14 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     {
                         var resultTask = result.Content.ReadAsStringAsync().Result;
                         product = JsonConvert.DeserializeObject<Product>(resultTask);
-                        TempData["Message"] = "Product get Successfully";
-                        TempData["class"] = MessageUtility.Success;
+                       // TempData["Message"] = "Product get Successfully";
+                       // TempData["class"] = MessageUtility.Success;
                     }
                     else
                     {
                         product = null;
-                        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-                        TempData["class"] = MessageUtility.Error;
+                      //  TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                       // TempData["class"] = MessageUtility.Error;
                     }
                     //return RedirectToAction("Index", "Home");
                 }

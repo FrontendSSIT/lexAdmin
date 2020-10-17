@@ -36,10 +36,6 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 return RedirectToAction("Login", "Home");
             }
             List<Order> orders = new List<Order>();
-            //List of products for an orders
-
-
-           
             using (var client = new HttpClientDemo())
             {
 
@@ -52,7 +48,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     var resultTask = result.Content.ReadAsStringAsync().Result;
                     orders = JsonConvert.DeserializeObject<List<Order>>(resultTask);
                     Session["TotalPendingOrders"] = orders.Count;
-                    TempData["Message"] = "order list get Successfully";
+                   // TempData["Message"] = "order list get Successfully";
                     TempData["class"] = MessageUtility.Success;
                 }
                 else
@@ -60,8 +56,8 @@ namespace Lex_Diary_Admin_Panel.Controllers
                    
                     Session["TotalPendingOrders"] = 0;
                     orders = null;
-                    TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-                    TempData["class"] = MessageUtility.Error;
+                   // TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                    //TempData["class"] = MessageUtility.Error;
                 }
                 //return RedirectToAction("Index", "Home");
             }
@@ -97,16 +93,16 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     var resultTask = result.Content.ReadAsStringAsync().Result;
                     orders = JsonConvert.DeserializeObject<List<Order>>(resultTask);
                     Session["TotalOrders"] = orders.Count;
-                    TempData["Message"] = "order list get Successfully";
-                    TempData["class"] = MessageUtility.Success;
+                   // TempData["Message"] = "order list get Successfully";
+                   // TempData["class"] = MessageUtility.Success;
                 }
                 else
                 {
                     Session["TotalProducts"] = 0;
                     Session["TotalOrders"] = 0;
                     orders = null;
-                    TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-                    TempData["class"] = MessageUtility.Error;
+                   // TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                   // TempData["class"] = MessageUtility.Error;
                 }
                 //return RedirectToAction("Index", "Home");
             }
@@ -151,8 +147,8 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     Session["TotalProducts"] = 0;
                     Session["TotalOrders"] = 0;
                     orders = null;
-                    TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-                    TempData["class"] = MessageUtility.Error;
+                  //  TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                   // TempData["class"] = MessageUtility.Error;
                 }
                 //return RedirectToAction("Index", "Home");
             }
@@ -189,7 +185,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     var resultTask = result.Content.ReadAsStringAsync().Result;
                     orders = JsonConvert.DeserializeObject<List<Order>>(resultTask);
                     Session["TotalOrders"] = orders.Count;
-                    TempData["Message"] = "order list get Successfully";
+                   // TempData["Message"] = "order list get Successfully";
                     TempData["class"] = MessageUtility.Success;
                 }
                 else
@@ -197,8 +193,8 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     Session["TotalProducts"] = 0;
                     Session["TotalOrders"] = 0;
                     orders = null;
-                    TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-                    TempData["class"] = MessageUtility.Error;
+                   // TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
+                  //  TempData["class"] = MessageUtility.Error;
                 }
                 //return RedirectToAction("Index", "Home");
             }
@@ -234,35 +230,6 @@ namespace Lex_Diary_Admin_Panel.Controllers
             Session["CustomerDetails"] = userDetails;
             Session["OrderProductDetailsList"] = orderDetailsList;
             Session["OrderPriceCalculation"] = orderPrice;
-
-
-
-            //get using id
-
-            //using (var client = new HttpClientDemo())
-            //{
-
-            //    var responseTask = client.GetAsync("product/readProduct.php?id=" + id);
-            //    responseTask.Wait();
-
-            //    var result = responseTask.Result;
-            //    if (result.IsSuccessStatusCode)
-            //    {
-            //        var resultTask = result.Content.ReadAsStringAsync().Result;
-            //        product = JsonConvert.DeserializeObject<Product>(resultTask);
-            //        TempData["Message"] = "Product get Successfully";
-            //        TempData["class"] = MessageUtility.Success;
-            //    }
-            //    else
-            //    {
-            //        product = null;
-            //        TempData["Message"] = "Sorry! Something went wrong. Please Try Again";
-            //        TempData["class"] = MessageUtility.Error;
-            //    }
-            //    //return RedirectToAction("Index", "Home");
-            //}
-
-         
             Session["CustomerDetails"] = userDetails;
             return View();
         }
@@ -318,7 +285,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     else
                     {
                         TempData["Message"] = "Sorry! Something went wrong. Please Try again or contact with the administration.";
-                        // TempData["class"] = MessageUtility.Error;
+                        TempData["class"] = MessageUtility.Error;
                         Session["IsLogin"] = false;
                         return View();
                     }
