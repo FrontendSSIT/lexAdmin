@@ -139,8 +139,8 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     var resultTask = result.Content.ReadAsStringAsync().Result;
                     orders = JsonConvert.DeserializeObject<List<Order>>(resultTask);
                     Session["TotalOrders"] = orders.Count;
-                    TempData["Message"] = "order list get Successfully";
-                    TempData["class"] = MessageUtility.Success;
+                   // TempData["Message"] = "order list get Successfully";
+                    ///TempData["class"] = MessageUtility.Success;
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     if (result.IsSuccessStatusCode)
                     {
 
-                        TempData["Message"] = "Order status updated successfully";
+                        TempData["Message"] = "Order "+ orderStatus + " successfully";
                         //TempData["class"] = MessageUtility.Success;
                         // Session["IsLogin"] = false;
                         if (orderStatus == "delivered")

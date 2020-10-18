@@ -65,7 +65,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" @*href="@Url.Action("Dashboard","Home")"*@ href="#">
+                <a class="nav-link" href="@Url.Action("Dashboard","Home")">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -232,6 +232,7 @@
 
                     <!-- Page Heading -->
                     @*<h1 class="h3 mb-4 text-gray-800">Add Product</h1>*@
+                    <div class="@TempData["class"]" id="flashmessage" role="alert" style="margin-top: 2%"><h4 style="font-weight: bold; text-align: center;">@TempData["Message"]</h4></div>
                     @RenderBody()
                 </div>
                 <!-- /.container-fluid -->
@@ -286,6 +287,19 @@
 
     <!-- Custom scripts for all pages-->
     <script src="~/Content/template-content/js/sb-admin-2.min.js"></script>
+    <script>
+       $(document).ready(function () {
+
+           $(function () {
+               setTimeout(function () {
+                   $("#flashmessage").hide('blind', {}, 500);
+               }, 5000);
+
+           });
+       });
+
+
+    </script> 
     @RenderSection("scripts", required: false)
 
 </body>

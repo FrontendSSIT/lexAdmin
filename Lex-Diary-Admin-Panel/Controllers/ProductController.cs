@@ -168,7 +168,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
 
                     else
                     {
-                        TempData["Message"] = "Sorry! Registration failed. Please Try again or contact with the administration.";
+                        TempData["Message"] = "Sorry! Somthing went wrong. Please Try again or contact with the administration.";
                         TempData["class"] = MessageUtility.Error;
                         Session["IsLogin"] = false;
                         return View();
@@ -214,8 +214,8 @@ namespace Lex_Diary_Admin_Panel.Controllers
                     {
                         var resultTask = result.Content.ReadAsStringAsync().Result;
                         products = JsonConvert.DeserializeObject<List<Product>>(resultTask);
-                        TempData["Message"] = "Product get Successfully";
-                        TempData["class"] = MessageUtility.Success;
+                        //TempData["Message"] = "Product get Successfully";
+                        //TempData["class"] = MessageUtility.Success;
                         foreach(var product in products)
                         {
                             List<string> listOfColors = new List<string>(product.colors.Split(',',':'));
