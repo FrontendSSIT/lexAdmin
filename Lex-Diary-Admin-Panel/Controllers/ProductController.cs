@@ -289,11 +289,11 @@ namespace Lex_Diary_Admin_Panel.Controllers
                         product = JsonConvert.DeserializeObject<Product>(resultTask);
                         Session["ProductDetails"] = product;
 
-                        List<string> listOfColors = new List<string>(product.colors.Split(',', ':'));
-                        listOfColors.RemoveAll(u => u.StartsWith("#"));
-                        listOfColors.RemoveAll(u => u.Contains("NULL"));
-                        var colors = String.Join(",", listOfColors);
-                        product.colors = colors;
+                        //List<string> listOfColors = new List<string>(product.colors.Split(',', ':'));
+                        //listOfColors.RemoveAll(u => u.StartsWith("#"));
+                        //listOfColors.RemoveAll(u => u.Contains("NULL"));
+                        //var colors = String.Join(",", listOfColors);
+                        //product.colors = colors;
 
                     //    TempData["Message"] = "Product get Successfully";
                      //   TempData["class"] = MessageUtility.Success;
@@ -339,7 +339,7 @@ namespace Lex_Diary_Admin_Panel.Controllers
                 aProduct.colors = productDetails.colors;
             }else
             {
-                var colorString = String.Join(",", colors);
+                var colorString = String.Join(",", colors)+",";
                 aProduct.colors = colorString;
             }
             if (sizes == null)

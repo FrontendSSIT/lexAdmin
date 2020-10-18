@@ -1,10 +1,18 @@
 ﻿@model Lex_Diary_Admin_Panel.Models.Product
+@using Lex_Diary_Admin_Panel.Models
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 
     var colorList = ViewBag.ColorList;
+    var productDetails = (Product)Session["ProductDetails"];
+    List<string> listOfColors = new List<string>(productDetails.colors.Split(',', ':'));
+    listOfColors.RemoveAll(u => u.StartsWith("#"));
+    listOfColors.RemoveAll(u => u.Contains("NULL"));
+    var colors = String.Join(",", listOfColors);
+    var colors1 = String.Join(",", listOfColors);
+
 }
 <style>
     p{
@@ -60,7 +68,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Available Colors</label>
             <div class="col-md-10">
-               <p> Current Avaiable colors: @Model.colors</p>
+               <p> Current Avaiable colors: @colors</p>
                 @Html.ValidationMessageFor(model => model.colors, "", new { @class = "text-danger" })
 
                 <select id="colors" name="colors" class="multiselect-ui form-control" multiple="multiple">
